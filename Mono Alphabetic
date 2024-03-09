@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#define ALPHABET_SIZE 26
+void monoalphabeticSubstitution(char message[], char key[]) {
+    int i, index;
+    char ch;
+    char mapping[ALPHABET_SIZE];
+    for (i = 0; i < ALPHABET_SIZE; i++) {
+        mapping[i] = key[i];
+    }
+    for (i = 0; message[i] != '\0'; i++) {
+        ch = message[i];
+        if (isupper(ch)) {
+            index = ch - 'A';
+            message[i] = toupper(mapping[index]);
+        }
+        else if (islower(ch)) {
+            index = ch - 'a';
+            message[i] = tolower(mapping[index]);
+        }
+        printf("%c", message[i]);
+    }
+}
+int main() {
+    char message[100];
+    char key[ALPHABET_SIZE + 1];
+    printf("Enter message to encrypt: ");
+    fgets(message, sizeof(message), stdin);
+    printf("Enter the key (26 unique letters): ");
+    fgets(key, sizeof(key), stdin);
+    message[strcspn(message, "\n")] = '\0';
+    key[strcspn(key, "\n")] = '\0';
+    if (strlen(key) != ALPHABET_SIZE) {
+        printf("Invalid key length. Key must be 26 characters long.\n");
+        return 1;
+    }
+    printf("Encrypted message: ");
+    monoalphabeticSubstitution(message, key);
+    printf("\n");
+    return 0;
+}
