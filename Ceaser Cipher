@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <ctype.h>
+#define ALPHABET_SIZE 26
+void caesarCipher(char message[], int key) {
+    int i;
+    char ch;
+    for (i = 0; message[i] != '\0'; ++i) {
+        ch = message[i];
+        if (isupper(ch)) {
+            ch = ((ch - 'A') + key) % ALPHABET_SIZE + 'A';
+        }
+        else if (islower(ch)) {
+            ch = ((ch - 'a') + key) % ALPHABET_SIZE + 'a';
+        }
+        printf("%c", ch);
+    }
+}
+int main() {
+    char message[100];
+    int key;
+    printf("Enter message to encrypt: ");
+    fgets(message, sizeof(message), stdin);
+    printf("Enter the value of k (shift): ");
+    scanf("%d", &key);
+    if (key < 1 || key > 25) {
+        printf("Invalid value of k. Please enter a value between 1 and 25.\n");
+        return 1;
+    }
+    printf("Encrypted message: ");
+    caesarCipher(message, key);
+    printf("\n");
+    return 0;
+}
